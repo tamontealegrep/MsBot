@@ -13,6 +13,8 @@ from dotenv import load_dotenv
 from app.config.settings import get_settings
 from app.bot.bot_handler import MSBotHandler
 from app.utils.logger import setup_logger
+from app.auth.auth_manager import AuthManager
+from app.auth.auth_middleware import AuthMiddleware
 
 # Load environment variables
 load_dotenv()
