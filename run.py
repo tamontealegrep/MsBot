@@ -23,8 +23,32 @@ if __name__ == "__main__":
             print("Copia .env.example a .env y configura las variables necesarias")
             sys.exit(1)
         
-        # Ejecutar aplicación
-        main()
+        # Ejecutar aplicación principal
+        if hasattr(main, 'create_ssl_context'):
+            # Usar la función principal de main.py
+            if main.settings.https_enabled and main.create_ssl_context():
+                main.logger.info(f"Starting HTTPS server on {main.settings.host}:{main.settings.port}")
+                import uvicorn
+                uvicorn.run(
+                    "main:app",
+                    host=main.settings.host,
+                    port=main.settings.port,
+                    ssl_keyfile=main.settings.ssl_key_path,
+                    ssl_certfile=main.settings.ssl_cert_path,
+                    reload=True if main.settings.environment == "development" else False
+                )
+            else:
+                main.logger.info(f"Starting HTTP server on {main.settings.host}:{main.settings.port}")
+                import uvicorn
+                uvicorn.run(
+                    "main:app",
+                    host=main.settings.host,
+                    port=main.settings.port,
+                    reload=True if main.settings.environment == "development" else False
+                )
+        else:
+            print("Error: No se pudo importar la función principal")
+            sys.exit(1)
         
     except KeyboardInterrupt:
         print("\n👋 MSBot detenido por usuario")
