@@ -41,8 +41,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize bot handler
-bot_handler = MSBotHandler()
+# Initialize authentication system
+auth_manager = AuthManager()
+auth_middleware = AuthMiddleware(auth_manager)
+
+# Initialize bot handler with authentication
+bot_handler = MSBotHandler(auth_manager, auth_middleware)
 
 @app.get("/")
 async def health_check():
