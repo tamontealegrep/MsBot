@@ -1,11 +1,12 @@
 """
-MSBot Handler - Main Bot Logic
+MSBot Handler - Main Bot Logic with Authentication
 Handles Microsoft Teams activities and routes them to appropriate handlers
+Now includes authentication and authorization
 """
 
 import json
 import time
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from aiohttp import web
 from botbuilder.core import (
     TurnContext, 
@@ -19,18 +20,25 @@ from botbuilder.schema import Activity, ActivityTypes, ChannelAccount
 from app.config.settings import get_settings
 from app.utils.logger import setup_logger, log_teams_activity, log_handler_execution
 from app.bot.handlers.handler_registry import HandlerRegistry
-from app.bot.handlers.echo_handler import EchoHandler
+from app.bot.handlers.authenticated_echo_handler import AuthenticatedEchoHandler
+from app.bot.handlers.admin_handler import AdminHandler
+from app.auth.auth_manager import AuthManager
+from app.auth.auth_middleware import AuthMiddleware
 
 class MSBotHandler(ActivityHandler):
     """
-    Main bot handler that processes Teams activities
-    Routes messages to appropriate modular handlers
+    Main bot handler that processes Teams activities with authentication
+    Routes messages to appropriate modular handlers after auth verification
     """
     
-    def __init__(self):
+    def __init__(self, auth_manager: AuthManager = None, auth_middleware: AuthMiddleware = None):
         super().__init__()
         self.settings = get_settings()
         self.logger = setup_logger(__name__)
+        
+        # Initialize authentication components
+        self.auth_manager = auth_manager or AuthManager()
+        self.auth_middleware = auth_middleware or AuthMiddleware(self.auth_manager)
         
         # Initialize Bot Framework Adapter
         self.adapter = self._create_adapter()
@@ -38,10 +46,10 @@ class MSBotHandler(ActivityHandler):
         # Initialize handler registry
         self.handler_registry = HandlerRegistry()
         
-        # Register default handlers
+        # Register default handlers with authentication
         self._register_default_handlers()
         
-        self.logger.info("MSBot initialized successfully")
+        self.logger.info("MSBot initialized successfully with authentication")
     
     def _create_adapter(self) -> BotFrameworkAdapter:
         """Create and configure Bot Framework Adapter"""
@@ -67,13 +75,17 @@ class MSBotHandler(ActivityHandler):
         return adapter
     
     def _register_default_handlers(self):
-        """Register default message handlers"""
+        """Register default message handlers with authentication"""
         
-        # Register Echo Handler as default
-        echo_handler = EchoHandler()
-        self.handler_registry.register_handler("echo", echo_handler, is_default=True)
+        # Register Authenticated Echo Handler as default
+        auth_echo_handler = AuthenticatedEchoHandler(self.auth_middleware)
+        self.handler_registry.register_handler("auth_echo", auth_echo_handler, is_default=True)
         
-        self.logger.info("Default handlers registered")
+        # Register Admin Handler
+        admin_handler = AdminHandler(self.auth_manager, self.auth_middleware)
+        self.handler_registry.register_handler("admin", admin_handler)
+        
+        self.logger.info("Authentication-enabled handlers registered")
     
     async def process_activity(self, body: bytes, auth_header: str) -> Dict[str, Any]:
         """
@@ -121,8 +133,8 @@ class MSBotHandler(ActivityHandler):
     
     async def on_message_activity(self, turn_context: TurnContext):
         """
-        Handle message activities from Teams
-        Routes messages to appropriate handlers
+        Handle message activities from Teams with authentication
+        Routes messages to appropriate handlers after auth check
         """
         
         start_time = time.time()
@@ -130,14 +142,15 @@ class MSBotHandler(ActivityHandler):
         try:
             user_message = turn_context.activity.text
             user_id = turn_context.activity.from_property.id
+            user_name = turn_context.activity.from_property.name
             
-            self.logger.info(f"Processing message from user {user_id}: {user_message}")
+            self.logger.info(f"Processing message from user {user_id} ({user_name}): {user_message}")
             
-            # Get appropriate handler (for now, always use default)
-            handler = self.handler_registry.get_default_handler()
+            # Get appropriate handler based on message content
+            handler = self._route_message_to_handler(user_message, turn_context)
             
             if handler:
-                # Process message through handler
+                # Process message through handler (auth is handled by each handler)
                 response = await handler.handle_message(user_message, turn_context)
                 
                 # Send response back to Teams
@@ -173,15 +186,43 @@ class MSBotHandler(ActivityHandler):
                 MessageFactory.text("Ocurrió un error procesando tu mensaje. Por favor intenta de nuevo.")
             )
     
+    def _route_message_to_handler(self, message: str, turn_context: TurnContext) -> Optional[Any]:
+        """
+        Route message to appropriate handler based on content
+        
+        Args:
+            message: User message
+            turn_context: Teams context
+            
+        Returns:
+            Handler instance or None
+        """
+        
+        # Check for admin commands first
+        if message.strip().startswith("/admin"):
+            admin_handler = self.handler_registry.get_handler("admin")
+            if admin_handler and admin_handler.can_handle(message):
+                return admin_handler
+        
+        # Use authenticated echo handler for other messages
+        auth_echo_handler = self.handler_registry.get_handler("auth_echo")
+        if auth_echo_handler and auth_echo_handler.can_handle(message):
+            return auth_echo_handler
+        
+        # Fallback to default handler
+        return self.handler_registry.get_default_handler()
+    
     async def on_members_added_activity(self, members_added: List[ChannelAccount], turn_context: TurnContext):
         """Handle when members are added to the conversation"""
         
         for member in members_added:
             if member.id != turn_context.activity.recipient.id:
                 welcome_message = (
-                    "¡Hola! Soy MSBot, tu interfaz para sistemas RAG. "
-                    "Envíame un mensaje y te responderé. "
-                    "Actualmente estoy en modo echo para pruebas."
+                    "¡Hola! Soy MSBot, tu interfaz autenticada para sistemas RAG.\n\n"
+                    "🔐 **Sistema de Autenticación Activo**\n"
+                    "Solo usuarios autorizados pueden usar este bot.\n\n"
+                    "💬 Envíame un mensaje para verificar tu acceso.\n"
+                    "👑 Los administradores pueden usar comandos `/admin help`"
                 )
                 await turn_context.send_activity(MessageFactory.text(welcome_message))
                 
@@ -199,3 +240,11 @@ class MSBotHandler(ActivityHandler):
         """Add a new handler to the registry"""
         self.handler_registry.register_handler(name, handler, is_default)
         self.logger.info(f"Handler '{name}' registered successfully")
+    
+    def get_auth_stats(self) -> Dict[str, Any]:
+        """Get authentication statistics"""
+        return self.auth_manager.get_user_stats()
+    
+    def cleanup_sessions(self, timeout_hours: int = 24) -> int:
+        """Cleanup inactive authentication sessions"""
+        return self.auth_manager.cleanup_inactive_sessions(timeout_hours)
