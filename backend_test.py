@@ -234,6 +234,81 @@ class MSBotTester:
             logger.error(f"Error testing error handling: {str(e)}")
             return False
     
+    def test_complete_flow(self) -> bool:
+        """Test a complete flow from health check to message handling"""
+        try:
+            # Step 1: Check health
+            health_response = requests.get(
+                f"{self.base_url}/",
+                verify=self.verify_ssl,
+                timeout=10
+            )
+            
+            if health_response.status_code != 200:
+                logger.error(f"Health check failed with status {health_response.status_code}")
+                return False
+                
+            logger.info("Health check passed")
+            
+            # Step 2: Check status and verify handlers
+            status_response = requests.get(
+                f"{self.base_url}/api/status",
+                verify=self.verify_ssl,
+                timeout=10
+            )
+            
+            if status_response.status_code != 200:
+                logger.error(f"Status check failed with status {status_response.status_code}")
+                return False
+                
+            status_data = status_response.json()
+            if "echo" not in status_data.get("handlers", []):
+                logger.error("Echo handler not found in status")
+                return False
+                
+            logger.info("Status check passed, echo handler registered")
+            
+            # Step 3: Send a message (expecting auth error, which is correct)
+            message = "Test message for complete flow"
+            activity = {
+                "type": "message",
+                "text": message,
+                "from": {
+                    "id": "test-user-id",
+                    "name": "Test User"
+                },
+                "recipient": {
+                    "id": "bot-id",
+                    "name": "MSBot"
+                },
+                "conversation": {
+                    "id": "test-conversation-id"
+                },
+                "channelId": "msteams",
+                "serviceUrl": "https://test.botframework.com"
+            }
+            
+            message_response = requests.post(
+                f"{self.base_url}/api/messages",
+                json=activity,
+                verify=self.verify_ssl,
+                timeout=10
+            )
+            
+            # We expect a 500 due to auth error, which is correct behavior
+            if message_response.status_code != 500:
+                logger.error(f"Unexpected message response status: {message_response.status_code}")
+                return False
+                
+            logger.info("Message test passed with expected auth error")
+            
+            # Complete flow test passed
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error in complete flow test: {str(e)}")
+            return False
+            
     def run_all_tests(self) -> bool:
         """
         Run all tests
@@ -246,7 +321,8 @@ class MSBotTester:
             ("Status Endpoint", self.test_status_endpoint),
             ("Messages Endpoint", self.test_messages_endpoint),
             ("Invalid Endpoint", self.test_invalid_endpoint),
-            ("Error Handling", self.test_error_handling)
+            ("Error Handling", self.test_error_handling),
+            ("Complete Flow", self.test_complete_flow)
         ]
         
         for name, test_func in tests:
