@@ -1,0 +1,32 @@
+{"timestamp": "2025-06-19T17:23:46.390105", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:23:46.390310", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:23:46.390353", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:23:46.390384", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:23:46.390413", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+{"timestamp": "2025-06-19T17:23:46.390960", "level": "INFO", "logger": "__main__", "message": "Starting MSBot server...", "module": "main", "function": "<module>", "line": 106}
+{"timestamp": "2025-06-19T17:23:46.391012", "level": "INFO", "logger": "__main__", "message": "Environment: development", "module": "main", "function": "<module>", "line": 107}
+{"timestamp": "2025-06-19T17:23:46.391071", "level": "INFO", "logger": "__main__", "message": "HTTPS Enabled: True", "module": "main", "function": "<module>", "line": 108}
+{"timestamp": "2025-06-19T17:23:46.392689", "level": "INFO", "logger": "__main__", "message": "Starting HTTPS server on 0.0.0.0:3978", "module": "main", "function": "<module>", "line": 114}
+INFO:     Will watch for changes in these directories: ['/app']
+INFO:     Uvicorn running on https://0.0.0.0:3978 (Press CTRL+C to quit)
+INFO:     Started reloader process [428] using WatchFiles
+{"timestamp": "2025-06-19T17:23:47.410523", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:23:47.410731", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:23:47.410786", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:23:47.410820", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:23:47.410848", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+{"timestamp": "2025-06-19T17:23:47.450360", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:23:47.450484", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:23:47.450549", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:23:47.450592", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:23:47.450622", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+INFO:     Started server process [442]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54510 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54522 - "GET /api/status HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [442]
+INFO:     Stopping reloader process [428]
