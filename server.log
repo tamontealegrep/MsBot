@@ -142,3 +142,62 @@ INFO:     Finished server process [1219]
 INFO:     Started server process [1242]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'run.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1242]
+{"timestamp": "2025-06-19T17:30:38.256966", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:30:38.257175", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:30:38.257236", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:30:38.257277", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:30:38.257312", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+{"timestamp": "2025-06-19T17:30:38.288171", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:30:38.288302", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:30:38.288356", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:30:38.288400", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:30:38.288430", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+INFO:     Started server process [1358]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'run.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1358]
+{"timestamp": "2025-06-19T17:30:56.667672", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:30:56.667858", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:30:56.667914", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:30:56.667969", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:30:56.668006", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+{"timestamp": "2025-06-19T17:30:56.700183", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:30:56.700323", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:30:56.700380", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:30:56.700421", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:30:56.700451", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+INFO:     Started server process [1384]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'run.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1384]
+{"timestamp": "2025-06-19T17:31:12.973697", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:31:12.973876", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:31:12.973927", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:31:12.973966", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:31:12.974013", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+{"timestamp": "2025-06-19T17:31:13.009282", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Handler registry initialized", "module": "handler_registry", "function": "__init__", "line": 26}
+{"timestamp": "2025-06-19T17:31:13.009425", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Set 'echo' as default handler", "module": "handler_registry", "function": "register_handler", "line": 48}
+{"timestamp": "2025-06-19T17:31:13.009480", "level": "INFO", "logger": "app.bot.handlers.handler_registry", "message": "Registered handler: echo (EchoHandler)", "module": "handler_registry", "function": "register_handler", "line": 50}
+{"timestamp": "2025-06-19T17:31:13.009522", "level": "INFO", "logger": "app.bot.bot_handler", "message": "Default handlers registered", "module": "bot_handler", "function": "_register_default_handlers", "line": 76}
+{"timestamp": "2025-06-19T17:31:13.009565", "level": "INFO", "logger": "app.bot.bot_handler", "message": "MSBot initialized successfully", "module": "bot_handler", "function": "__init__", "line": 44}
+INFO:     Started server process [1410]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1410]
+INFO:     Stopping reloader process [910]
